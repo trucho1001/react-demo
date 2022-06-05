@@ -1,0 +1,39 @@
+@import "../styles/main.scss";
+.container.custom {
+  @include breakpoint-down(xs) {
+    padding-top: 1rem !important;
+  }
+  > div {
+    flex-grow: 0;
+    max-width: 31rem;
+    flex-basis: 31rem;
+    @include breakpoint-down(xs) {
+      flex-grow: 0;
+      max-width: 100%;
+      flex-basis: 100%;
+    }
+  }
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 1rem;
+  width: 7rem;
+  @include breakpoint-down(xs) {
+    position: initial;
+    margin-top: 0;
+  }
+}

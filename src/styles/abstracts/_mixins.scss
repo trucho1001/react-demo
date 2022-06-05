@@ -1,0 +1,164 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+
+/// Event wrapper
+/// @author Harry Roberts
+/// @param {Bool} $self [false] - Whether or not to include current selector
+/// @link https://twitter.com/csswizardry/status/478938530342006784 Original tweet from Harry Roberts
+@mixin on-event($self: false) {
+  @if $self {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  } @else {
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+}
+
+/// Make a context based selector a little more friendly
+/// @author Kitty Giraudel
+/// @param {String} $context
+@mixin when-inside($context) {
+  #{$context} & {
+    @content;
+  }
+}
+
+// Padding
+@mixin generate-padding($n, $step) {
+  .padding {
+    @for $i from 0 through $n {
+      $distance: $i * $step;
+      $value: $distance * 1rem;
+      &-#{$distance} {
+        padding: $value !important;
+      }
+      &.top-#{$distance} {
+        padding-top: $value !important;
+      }
+      &.right-#{$distance} {
+        padding-right: $value !important;
+      }
+      &.bottom-#{$distance} {
+        padding-bottom: $value !important;
+      }
+      &.left-#{$distance} {
+        padding-left: $value !important;
+      }
+    }
+  }
+}
+
+@mixin no-padding() {
+  padding: 0;
+}
+
+// Margin
+@mixin generate-margin($n, $step) {
+  .margin {
+    @for $i from 0 through $n {
+      $distance: $i * $step;
+      $value: $distance * 1rem;
+
+      &-#{$distance} {
+        margin: $value !important;
+      }
+
+      &.top-#{$distance} {
+        margin-top: $value !important;
+      }
+
+      &.right-#{$distance} {
+        margin-right: $value !important;
+      }
+
+      &.bottom-#{$distance} {
+        margin-bottom: $value !important;
+      }
+
+      &.left-#{$distance} {
+        margin-left: $value !important;
+      }
+    }
+  }
+}
+
+@mixin generate-negative-margin($n, $step) {
+  .margin.negative {
+    @for $i from 0 through $n {
+      $distance: $i * $step;
+      $value: $distance * -1rem;
+
+      &-#{$distance} {
+        margin: $value !important;
+      }
+
+      &.top-#{$distance} {
+        margin-top: $value !important;
+      }
+
+      &.right-#{$distance} {
+        margin-right: $value !important;
+      }
+
+      &.bottom-#{$distance} {
+        margin-bottom: $value !important;
+      }
+
+      &.left-#{$distance} {
+        margin-left: $value !important;
+      }
+    }
+  }
+}
+
+// Breakpoint
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints-max) {
+  $max: breakpoint-max($name, $breakpoints);
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin breakpoint($name) {
+  @include media-breakpoint-up($name, $grid-breakpoints) {
+    @content;
+  }
+}
+
+@mixin breakpoints($names) {
+  @each $name in $names {
+    @include media-breakpoint-up($name, $grid-breakpoints) {
+      @content;
+    }
+  }
+}
+
+@mixin breakpoint-down($name) {
+  @include media-breakpoint-down($name, $grid-breakpoints-max) {
+    @content;
+  }
+}
