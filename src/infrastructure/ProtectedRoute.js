@@ -5,7 +5,7 @@ import MyContext from "../contexts/MyContext";
 export const ProtectedRoute = ({ children }) => {
   const myContext = useContext(MyContext);
   if (!myContext.authorized) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
   return children;
 };

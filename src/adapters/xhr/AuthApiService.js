@@ -1,3 +1,5 @@
+import { trackPromise } from "react-promise-tracker";
+import { roles } from "../../Constant";
 import Service from "./Service";
 
 class AuthApiService extends Service {
@@ -5,18 +7,26 @@ class AuthApiService extends Service {
     super("api");
   }
 
-  login(username, password, returnUrl) {
-    this.post(
-      `/authenticate`,
-      {
-        username: username,
-        password: password,
-      },
-      (status, data) => {
-        // console.log("****** response is *******", status, data);
-        // document.location = data.redirectUrl;
-        document.location = "/dashboard";
-      }
+  login(username, password) {
+    let status = 401;
+    let role = "";
+    if (username == "admin" && password == "admin") {
+      status = 200;
+      role = roles.admin;
+    }
+    if (username == "user" && password == "user") {
+      status = 200;
+      role = roles.user;
+    }
+    return trackPromise(
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            status: status,
+            role: role,
+          });
+        }, 1500);
+      })
     );
   }
 }

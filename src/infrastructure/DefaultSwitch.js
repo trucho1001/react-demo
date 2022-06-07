@@ -17,9 +17,11 @@ export class DefaultSwitch extends Component {
         <Route
           path="/"
           element={
-            <Layout>
-              <DashboardPage />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <DashboardPage />
+              </Layout>
+            </ProtectedRoute>
           }
         />
         <Route
@@ -32,22 +34,8 @@ export class DefaultSwitch extends Component {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/login"
-          element={
-            <Layout>
-              <LoginPage />
-            </Layout>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <Layout>
-              <RegisterPage />
-            </Layout>
-          }
-        />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route
           path="/logout"
           element={

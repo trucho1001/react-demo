@@ -29,7 +29,7 @@ export const DashboardPage = (props) => {
         className="margin bottom-1 padding-1"
       />
       {items.map((item, index) => (
-        <div key={index}>{item.title}</div>
+        <div><a key={index} href={item.url} title={item.title} target="_blank">{item.title}</a></div>
       ))}
     </div>
   );

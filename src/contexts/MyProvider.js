@@ -9,7 +9,8 @@ export default class MyProvider extends Component {
 
   getInitialState = () => ({
     authorized: false,
-    users: [],
+    role: "",
+    users: [{ username: "admin", password: "123" }],
   });
 
   resetState = () => {
@@ -20,6 +21,10 @@ export default class MyProvider extends Component {
     return (
       <MyContext.Provider
         value={{
+          role: this.state.role,
+          changeRole: (role) => {
+            this.setState({ role });
+          },
           authorized: this.state.authorized,
           changeAuthorized: (authorized) => {
             this.setState({ authorized });

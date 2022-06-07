@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { Alert } from "reactstrap";
 import { MyButton } from "../../components/my-button/MyButton";
 import { MyTextField } from "../../components/my-text-field/MyTextField";
-import { ValidTextRegExp } from "../../Constant";
+import { EmailRegExp, ValidTextRegExp } from "../../Constant";
 import MyContext from "../../contexts/MyContext";
 
 export const RegisterPage = (props) => {
@@ -22,6 +22,7 @@ export const RegisterPage = (props) => {
 
   const register = () => {
     let isValid = true;
+    let validEmail = new RegExp(EmailRegExp);
     if (username == "") {
       setUsernameErr(t("required"));
       isValid = false;
@@ -31,9 +32,9 @@ export const RegisterPage = (props) => {
     if (email == "") {
       setEmailErr(t("required"));
       isValid = false;
-    } else {
-      setEmailErr("");
-    }
+    } else if (!validEmail.test(email)) {
+      setEmailErr("invalid");
+    } else setEmailErr("");
     if (password == "") {
       setPasswordErr(t("required"));
       isValid = false;
