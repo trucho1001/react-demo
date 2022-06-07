@@ -15,7 +15,7 @@ class AuthApiService extends Service {
       (status, data) => {
         // console.log("****** response is *******", status, data);
         // document.location = data.redirectUrl;
-        document.location = "/train/admin/overview";
+        document.location = "/dashboard";
       }
     );
   }

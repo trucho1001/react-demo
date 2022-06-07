@@ -4,13 +4,12 @@ import MyContext from "./MyContext";
 export default class MyProvider extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      ...this.getInitialState(),
-    };
+    this.state = this.getInitialState();
   }
 
   getInitialState = () => ({
-    data: "",
+    authorized: false,
+    users: [],
   });
 
   resetState = () => {
@@ -21,9 +20,15 @@ export default class MyProvider extends Component {
     return (
       <MyContext.Provider
         value={{
-          data: this.state.data,
-          changeData: (data) => {
-            this.setState({ data });
+          authorized: this.state.authorized,
+          changeAuthorized: (authorized) => {
+            this.setState({ authorized });
+          },
+          users: this.state.users,
+          addUsers: (user) => {
+            this.setState((prevState) => ({
+              users: [...prevState.users, user],
+            }));
           },
           resetState: () => {
             this.resetState();

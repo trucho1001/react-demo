@@ -2,7 +2,8 @@ export const toBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result.replace("data:", "").replace(/^.+,/, ""));
+    reader.onload = () =>
+      resolve(reader.result.replace("data:", "").replace(/^.+,/, ""));
     reader.onerror = (error) => reject(error);
   });
 
@@ -27,4 +28,14 @@ export function eraseCookie(name) {
   d.setTime(d.getTime() - 1);
   let expires = "expires=" + d.toUTCString();
   document.cookie = `${name}=` + ";" + expires + ";path=/";
+}
+
+export function debounce(func, timeout = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
 }

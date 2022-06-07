@@ -1,6 +1,6 @@
 import React from "react";
 import { Component } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 import { ApplicationPaths, QueryParameterNames } from "./ApiAuthorizationConstants";
 import authService from "./AuthorizeService";
 
@@ -31,28 +31,29 @@ export default class AuthorizeRoute extends Component {
     // const redirectUrl = this.props.redirectUrl ?? `${ApplicationPaths.Login}?${QueryParameterNames.ReturnUrl}=${encodeURI(returnUrl)}`;
     const redirectUrl = `${ApplicationPaths.Login}?${QueryParameterNames.ReturnUrl}=${encodeURI(returnUrl)}`;
     if (!ready) {
-      return <div></div>;
+      return <React.Fragment></React.Fragment>;
     } else {
       const { component: Component, layout: Layout, ...rest } = this.props;
       return (
-        <Route
-          {...rest}
-          render={(props) => {
-            if (authenticated) {
-              if (Layout) {
-                return (
-                  <Layout>
-                    <Component {...props} />
-                  </Layout>
-                );
-              } else {
-                return <Component {...props} />;
-              }
-            } else {
-              return <Redirect to={redirectUrl} />;
-            }
-          }}
-        />
+        <React.Fragment></React.Fragment>
+        // <Route
+        //   {...rest}
+        //   render={(props) => {
+        //     if (authenticated) {
+        //       if (Layout) {
+        //         return (
+        //           <Layout>
+        //             <Component {...props} />
+        //           </Layout>
+        //         );
+        //       } else {
+        //         return <Component {...props} />;
+        //       }
+        //     } else {
+        //       return <Navigate to={redirectUrl} />;
+        //     }
+        //   }}
+        // />
       );
     }
   }
