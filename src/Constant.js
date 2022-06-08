@@ -13,3 +13,16 @@ export const roles = {
   user: "user",
   admin: "admin",
 };
+
+export const users = [
+  {
+    username: "admin",
+    password: "admin",
+    role: roles.admin,
+  },
+  {
+    username: "user",
+    password: "user",
+    role: roles.user,
+  },
+];

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import AlgoliaApiService from "../../adapters/xhr/AlgoliaApiService";
-import { debounce } from "../../Utils";
+import AlgoliaApiService from "../../api/AlgoliaApiService";
+import { debounce } from "../../utils/Utils";
 
 export const DashboardPage = (props) => {
   const [value, setValue] = useState("");
@@ -29,7 +29,7 @@ export const DashboardPage = (props) => {
         className="margin bottom-1 padding-1"
       />
       {items.map((item, index) => (
-        <div><a key={index} href={item.url} title={item.title} target="_blank">{item.title}</a></div>
+        <div key={index}>{item.title}</div>
       ))}
     </div>
   );

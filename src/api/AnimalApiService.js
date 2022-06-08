@@ -5,7 +5,7 @@ class AnimalApiService extends Service {
     super("");
   }
 
-  async getAll(keyword) {
+  async getAnimals() {
     let result = await this.get(
       `https://629836b0f2decf5bb73d67d4.mockapi.io/animals`,
       (status, data) => {
@@ -15,7 +15,7 @@ class AnimalApiService extends Service {
     return result;
   }
 
-  async addItem(payload) {
+  async addAnimal(payload) {
     let result = await this.post(
       `https://629836b0f2decf5bb73d67d4.mockapi.io/animals`,
       payload,
@@ -26,7 +26,7 @@ class AnimalApiService extends Service {
     return result;
   }
 
-  async updateItem(id, payload) {
+  async updateAnimal(id, payload) {
     let result = await this.put(
       `https://629836b0f2decf5bb73d67d4.mockapi.io/animals/${id}`,
       payload,
@@ -37,7 +37,7 @@ class AnimalApiService extends Service {
     return result;
   }
 
-  async deleteItem(id) {
+  async deleteAnimal(id) {
     let result = await this.delete(
       `https://629836b0f2decf5bb73d67d4.mockapi.io/animals/${id}`,
       (status, data) => {

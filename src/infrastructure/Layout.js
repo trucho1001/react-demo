@@ -2,7 +2,6 @@ import { Box, Drawer, List, ListItem } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
-import { NavMenu } from "../components/NavMenu";
 import { lngs, roles } from "../Constant";
 import MyContext from "../contexts/MyContext";
 
@@ -21,13 +20,13 @@ export const Layout = (props) => {
               anchor="left"
               PaperProps={{ style: { width: "150px", fontSize: "1rem" } }}
             >
-              <h4 style={{ padding: "1rem 1rem 0 1rem" }}>{t("menu")}</h4>
+              <h4 style={{ padding: "1rem 1rem 0 1rem" }}>{t("Menu")}</h4>
               <List>
                 {context.role == roles.user ? (
                   <>
                     <ListItem>
                       <NavLink to="/" style={{ color: "black" }}>
-                        {t("dashboard")}
+                        {t("Dashboard")}
                       </NavLink>
                     </ListItem>
                   </>
@@ -35,19 +34,19 @@ export const Layout = (props) => {
                   <>
                     <ListItem>
                       <NavLink to="/" style={{ color: "black" }}>
-                        {t("dashboard")}
+                        {t("Dashboard")}
                       </NavLink>
                     </ListItem>
                     <ListItem>
                       <NavLink to="/settings" style={{ color: "black" }}>
-                        {t("settings")}
+                        {t("Settings")}
                       </NavLink>
                     </ListItem>
                   </>
                 )}
                 <ListItem>
                   <NavLink to="/logout" style={{ color: "black" }}>
-                    {t("logout")}
+                    {t("Logout")}
                   </NavLink>
                 </ListItem>
               </List>

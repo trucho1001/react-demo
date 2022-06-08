@@ -2,12 +2,12 @@ import { Alert, Box, Grid, Link } from "@mui/material";
 import React, { useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import AuthApiService from "../../adapters/xhr/AuthApiService";
-import authService from "../../components/api-authorization/AuthorizeService";
+import AuthApiService from "../../api/AuthApiService";
 import { MyButton } from "../../components/my-button/MyButton";
 import { MyTextField } from "../../components/my-text-field/MyTextField";
 import { ValidTextRegExp } from "../../Constant";
 import MyContext from "../../contexts/MyContext";
+import SnackbarUtils from "../../utils/SnackbarUtils";
 
 export const LoginPage = (props) => {
   const { t, i18n } = useTranslation();
@@ -20,14 +20,20 @@ export const LoginPage = (props) => {
   const myContext = useContext(MyContext);
 
   const login = async () => {
-    if (!username) setUsernameErr(t("required"));
-    else setUsernameErr("");
-    if (!password) setPasswordErr(t("required"));
-    else setPasswordErr("");
-    if (usernameErr != "" || passwordErr != "") return;
+    let isValid = true;
+    if (!username) {
+      setUsernameErr(t("required"));
+      isValid = false;
+    } else setUsernameErr("");
+    if (!password) {
+      setPasswordErr(t("required"));
+      isValid = false;
+    } else setPasswordErr("");
+    if (!isValid) return;
     let result = await AuthApiService.login(username, password);
     if (result.status == 200) {
-      myContext.changeRole(result.role);
+      SnackbarUtils.success("success");
+      myContext.changeRole(result.user.role);
       myContext.changeAuthorized(true);
       navigate("/", { replace: true });
     } else if (result.status == 401) {
@@ -47,7 +53,7 @@ export const LoginPage = (props) => {
             <Grid item>
               <h1>{t("login").toUpperCase()}</h1>
               <MyTextField
-                label={t("username")}
+                label={t("Username")}
                 value={username}
                 onChange={setUsername}
                 regExp={ValidTextRegExp}
@@ -55,7 +61,7 @@ export const LoginPage = (props) => {
               />
               <MyTextField
                 type="password"
-                label={t("password")}
+                label={t("Password")}
                 value={password}
                 onChange={setPassword}
                 helperText={passwordErr}

@@ -1,6 +1,6 @@
 import axios from "axios";
-// import SnackbarUtils from "../../SnackbarUtils";
-import { eraseCookie, getCookie } from "../../Utils";
+import { trackPromise } from "react-promise-tracker";
+import { eraseCookie, getCookie } from "../utils/Utils";
 
 export default class Service {
   constructor(path, baseURL) {
@@ -83,7 +83,7 @@ export default class Service {
   };
 
   async get(path, callback) {
-    const response = await this.service.get(path);
+    const response = await trackPromise(this.service.get(path));
     return callback(response.status, response.data);
   }
 
@@ -103,31 +103,37 @@ export default class Service {
   }
 
   async post(path, payload, callback) {
-    const response = await this.service.request({
-      method: "POST",
-      url: path,
-      responseType: "json",
-      data: payload,
-    });
+    const response = await trackPromise(
+      this.service.request({
+        method: "POST",
+        url: path,
+        responseType: "json",
+        data: payload,
+      })
+    );
     return callback(response.status, response.data);
   }
 
   async put(path, payload, callback) {
-    const response = await this.service.request({
-      method: "PUT",
-      url: path,
-      responseType: "json",
-      data: payload,
-    });
+    const response = await trackPromise(
+      this.service.request({
+        method: "PUT",
+        url: path,
+        responseType: "json",
+        data: payload,
+      })
+    );
     return callback(response.status, response.data);
   }
 
   async delete(path, callback) {
-    const response = await this.service.request({
-      method: "DELETE",
-      url: path,
-      responseType: "json",
-    });
+    const response = await trackPromise(
+      this.service.request({
+        method: "DELETE",
+        url: path,
+        responseType: "json",
+      })
+    );
     return callback(response.status, response.data);
   }
 }

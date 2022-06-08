@@ -13,6 +13,7 @@
     "i18next-browser-languagedetector": "^6.1.2",
     "i18next-http-backend": "^1.2.8",
     "merge": "^1.2.1",
+    "notistack": "^2.0.5",
     "oidc-client": "^1.11.5",
     "personnummer": "^3.1.4",
     "react": "^18.1.0",

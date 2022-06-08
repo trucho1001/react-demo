@@ -1,5 +1,5 @@
 import { trackPromise } from "react-promise-tracker";
-import { roles } from "../../Constant";
+import { roles, users } from "../Constant";
 import Service from "./Service";
 
 class AuthApiService extends Service {
@@ -9,21 +9,31 @@ class AuthApiService extends Service {
 
   login(username, password) {
     let status = 401;
-    let role = "";
-    if (username == "admin" && password == "admin") {
+    let existed = users.find(
+      (item) => item.username == username && item.password == password
+    );
+    if (existed) {
       status = 200;
-      role = roles.admin;
-    }
-    if (username == "user" && password == "user") {
-      status = 200;
-      role = roles.user;
     }
     return trackPromise(
       new Promise((resolve) => {
         setTimeout(() => {
           resolve({
             status: status,
-            role: role,
+            user: existed,
+          });
+        }, 1500);
+      })
+    );
+  }
+
+  register(payload) {
+    return trackPromise(
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            status: 200,
+            payload: payload,
           });
         }, 1500);
       })
