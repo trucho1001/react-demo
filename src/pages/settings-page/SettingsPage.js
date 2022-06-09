@@ -24,50 +24,40 @@ import AddIcon from "@mui/icons-material/Add";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import AnimalApiService from "../../api/AnimalApiService";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { MyTextField } from "../../components/my-text-field/MyTextField";
-import { getComparator, stableSort } from "../../utils/Utils";
+import { formatDate, getComparator, stableSort } from "../../utils/Utils";
 
 const headCells = [
-  {
-    id: "id",
-    label: "Id",
-  },
+  // {
+  //   id: "id",
+  //   label: "Id",
+  //   width: 500,
+  // },
   {
     id: "age",
-    numeric: true,
-    disablePadding: false,
+    width: 500,
     label: "Age",
   },
   {
     id: "name",
-    numeric: true,
-    disablePadding: false,
+    width: 500,
     label: "Name",
   },
   {
     id: "type",
-    numeric: true,
-    disablePadding: false,
     label: "Type",
+    width: 500,
+  },
+  {
+    id: "created_at",
+    label: "Created at",
+    width: 500,
   },
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -75,7 +65,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        <TableCell padding="checkbox" align={"left"}>
           {/* <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -89,15 +79,12 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
+            width={headCell.width}
+            align={"left"}
+            // padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
+            <TableSortLabel active={orderBy === headCell.id} direction={orderBy === headCell.id ? order : "asc"} onClick={createSortHandler(headCell.id)}>
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
@@ -121,20 +108,11 @@ const EnhancedTableToolbar = (props) => {
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
+          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         }),
       }}
     >
-      <Typography
-        sx={{ flex: "1 1 100%" }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
+      <Typography sx={{ flex: "1 1 100%" }} variant="h6" id="tableTitle" component="div">
         Animals{" "}
         <IconButton onClick={props.onAdd}>
           <AddIcon />
@@ -206,10 +184,7 @@ export const SettingsPage = () => {
   };
 
   const updateAnimal = async () => {
-    let result = await AnimalApiService.updateAnimal(
-      selected[0],
-      animalToUpdate
-    );
+    let result = await AnimalApiService.updateAnimal(selected[0], animalToUpdate);
     if (result) {
       setMode("");
       setSelected([]);
@@ -238,10 +213,7 @@ export const SettingsPage = () => {
     } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
     }
 
     setSelected(newSelected);
@@ -260,8 +232,7 @@ export const SettingsPage = () => {
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
   return (
     <>
       <Box sx={{ width: "100%" }}>
@@ -273,17 +244,8 @@ export const SettingsPage = () => {
             onAdd={(e) => setMode("add")}
           />
           <TableContainer>
-            <Table
-              sx={{ minWidth: 750 }}
-              aria-labelledby="tableTitle"
-              size={"medium"}
-            >
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-              />
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={"medium"}>
+              <EnhancedTableHead numSelected={selected.length} order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
               <TableBody>
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
@@ -307,22 +269,18 @@ export const SettingsPage = () => {
                           <Checkbox
                             color="primary"
                             checked={isItemSelected}
-                            inputProps={{
-                              "aria-labelledby": labelId,
-                            }}
+                            // inputProps={{
+                            //   "aria-labelledby": labelId,
+                            // }}
                           />
                         </TableCell>
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                        >
+                        {/* <TableCell component="th" id={labelId} scope="row">
                           {row.id}
-                        </TableCell>
-                        <TableCell align="right">{row.age}</TableCell>
-                        <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.type}</TableCell>
+                        </TableCell> */}
+                        <TableCell align="left">{row.age}</TableCell>
+                        <TableCell align="left">{row.name}</TableCell>
+                        <TableCell align="left">{row.type}</TableCell>
+                        <TableCell align="left">{formatDate(row.createdAt)}</TableCell>
                       </TableRow>
                     );
                   })}
@@ -352,25 +310,9 @@ export const SettingsPage = () => {
       <Dialog open={mode == "add"}>
         <DialogTitle>{"Add animal"}</DialogTitle>
         <DialogContent>
-          <MyTextField
-            label="age"
-            value={animalToAdd.age}
-            onChange={(value) => setAnimalToAdd({ ...animalToAdd, age: value })}
-          />
-          <MyTextField
-            label="name"
-            value={animalToAdd.name}
-            onChange={(value) =>
-              setAnimalToAdd({ ...animalToAdd, name: value })
-            }
-          />
-          <MyTextField
-            label="type"
-            value={animalToAdd.type}
-            onChange={(value) =>
-              setAnimalToAdd({ ...animalToAdd, type: value })
-            }
-          />
+          <MyTextField label="age" value={animalToAdd.age} onChange={(value) => setAnimalToAdd({ ...animalToAdd, age: value })} />
+          <MyTextField label="name" value={animalToAdd.name} onChange={(value) => setAnimalToAdd({ ...animalToAdd, name: value })} />
+          <MyTextField label="type" value={animalToAdd.type} onChange={(value) => setAnimalToAdd({ ...animalToAdd, type: value })} />
         </DialogContent>
         <DialogActions>
           <Button onClick={(e) => setMode("")}>Cancel</Button>
@@ -380,27 +322,9 @@ export const SettingsPage = () => {
       <Dialog open={mode == "update"}>
         <DialogTitle>{"Update animal"}</DialogTitle>
         <DialogContent>
-          <MyTextField
-            label="age"
-            value={animalToUpdate?.age}
-            onChange={(value) =>
-              setAnimalToUpdate({ ...animalToUpdate, age: value })
-            }
-          />
-          <MyTextField
-            label="name"
-            value={animalToUpdate?.name}
-            onChange={(value) =>
-              setAnimalToUpdate({ ...animalToUpdate, name: value })
-            }
-          />
-          <MyTextField
-            label="type"
-            value={animalToUpdate?.type}
-            onChange={(value) =>
-              setAnimalToUpdate({ ...animalToUpdate, type: value })
-            }
-          />
+          <MyTextField label="age" value={animalToUpdate?.age} onChange={(value) => setAnimalToUpdate({ ...animalToUpdate, age: value })} />
+          <MyTextField label="name" value={animalToUpdate?.name} onChange={(value) => setAnimalToUpdate({ ...animalToUpdate, name: value })} />
+          <MyTextField label="type" value={animalToUpdate?.type} onChange={(value) => setAnimalToUpdate({ ...animalToUpdate, type: value })} />
         </DialogContent>
         <DialogActions>
           <Button onClick={(e) => setMode("")}>Cancel</Button>

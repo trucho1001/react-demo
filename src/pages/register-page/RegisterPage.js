@@ -37,12 +37,14 @@ export const RegisterPage = (props) => {
       isValid = false;
     } else if (!validEmail.test(email)) {
       setEmailErr("Invalid");
+      isValid = false;
     } else setEmailErr("");
     if (password == "") {
       setPasswordErr(t("Required"));
       isValid = false;
     } else if (password.length <= 5) {
-      setPasswordErr("should be more than 5 characters");
+      setPasswordErr("Should be more than 5 characters");
+      isValid = false;
     } else setPasswordErr("");
     if (confirmPassword == "") {
       setConfirmPasswordErr(t("Required"));
@@ -67,34 +69,12 @@ export const RegisterPage = (props) => {
     <MyContext.Consumer>
       {(context) => (
         <Box>
-          <Grid
-            container
-            className="container custom padding bottom-2"
-            justifyContent="center"
-          >
+          <Grid container className="container custom padding bottom-2" justifyContent="center">
             <Grid item xs={4}>
               <h1>{t("register").toUpperCase()}</h1>
-              <MyTextField
-                label={t("Username")}
-                value={username}
-                onChange={setUsername}
-                regExp={ValidTextRegExp}
-                helperText={usernameErr}
-              />
-              <MyTextField
-                label={t("Email")}
-                value={email}
-                onChange={setEmail}
-                regExp={ValidTextRegExp}
-                helperText={emailErr}
-              />
-              <MyTextField
-                type="password"
-                label={t("Password")}
-                value={password}
-                onChange={setPassword}
-                helperText={passwordErr}
-              />
+              <MyTextField label={t("Username")} value={username} onChange={setUsername} regExp={ValidTextRegExp} helperText={usernameErr} />
+              <MyTextField label={t("Email")} value={email} onChange={setEmail} regExp={ValidTextRegExp} helperText={emailErr} />
+              <MyTextField type="password" label={t("Password")} value={password} onChange={setPassword} helperText={passwordErr} />
               <MyTextField
                 type="password"
                 label={t("Confirm password")}
@@ -102,18 +82,10 @@ export const RegisterPage = (props) => {
                 onChange={setConfirmPassword}
                 helperText={confirmPasswordErr}
               />
-              <MyButton
-                className="margin bottom-1 right-1"
-                onClick={(e) => register()}
-                text={t("register")}
-              />
+              <MyButton className="margin bottom-1 right-1" onClick={(e) => register()} text={t("register")} />
               <Link href="/login">Login?</Link>
               {message && (
-                <Alert
-                  variant="filled"
-                  severity="error"
-                  className="margin top-1 bottom-1"
-                >
+                <Alert variant="filled" severity="error" className="margin top-1 bottom-1">
                   {message}
                 </Alert>
               )}

@@ -2,8 +2,7 @@ export const toBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () =>
-      resolve(reader.result.replace("data:", "").replace(/^.+,/, ""));
+    reader.onload = () => resolve(reader.result.replace("data:", "").replace(/^.+,/, ""));
     reader.onerror = (error) => reject(error);
   });
 
@@ -51,9 +50,7 @@ export function descendingComparator(a, b, orderBy) {
 }
 
 export function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+  return order === "desc" ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 export function stableSort(array, comparator) {
@@ -66,4 +63,12 @@ export function stableSort(array, comparator) {
     return a[1] - b[1];
   });
   return stabilizedThis.map((el) => el[0]);
+}
+
+export function formatDate(date) {
+  if (!date) return "";
+  if (date === "0001-01-01T00:00:00") return "";
+  let result = new Date(date);
+  result = new Date(Date.UTC(result.getFullYear(), result.getMonth(), result.getDate(), result.getHours(), result.getMinutes()));
+  return result.toISOString().slice(0, 10);
 }
