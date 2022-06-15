@@ -1,5 +1,5 @@
 // @flow
-import { Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText } from "@material-ui/core";
+import { Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText } from "@mui/material";
 import React from "react";
 export const MyCheckbox = (props) => {
   return (

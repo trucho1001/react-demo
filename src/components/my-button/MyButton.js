@@ -9,6 +9,7 @@ export const MyButton = (props) => {
       onClick={props.onClick}
       color={props.color ?? "primary"}
       variant="contained"
+      fullWidth={props.fullWidth}
     >
       {props.text}
     </Button>
